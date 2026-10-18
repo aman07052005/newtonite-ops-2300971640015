@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ops
+      POSTGRES_PASSWORD: ops_dev_password
+      POSTGRES_DB: newtonite_ops
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ops -d newtonite_ops"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  api:
+    build: ./api
+    environment:
+      PORT: 4000
+      DATABASE_URL: postgres://ops:ops_dev_password@db:5432/newtonite_ops
+      JWT_SECRET: ${JWT_SECRET:-local-demo-secret-change-me}
+      CLIENT_ORIGIN: http://localhost:5173
+    ports:
+      - "4000:4000"
+    depends_on:
+      db:
+        condition: service_healthy
+  web:
+    build: ./web
+    environment:
+      VITE_API_URL: http://localhost:4000
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+volumes:
+  pgdata:
