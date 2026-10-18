@@ -3,7 +3,7 @@
 A team-scoped operations tracker for creating, assigning, and resolving work items with **workflow guardrails, server-side authorization, concurrency safety, and an auditable activity history**.
 
 > **Project demo:** [▶ Watch the 3–5 minute Newtonite Ops walkthrough](https://drive.google.com/file/d/1UbL8oaPmMBS3dTyf898PjqMdwuH_R5uq/view)  
-> The demo is shared for link-based viewing. If access is requested, check the Google Drive sharing setting.
+> The demo is shared for link-based viewing.
 
 ## At a glance
 
